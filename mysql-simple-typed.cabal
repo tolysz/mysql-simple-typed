@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                mysql-simple-typed
-version:             0.1.0.1
+version:             0.1.1.1
 synopsis:            Typed extension to mysql simple
 -- description:         
 homepage:            https://github.com/tolysz/mysql-simple-typed
@@ -24,7 +24,7 @@ library
   -- other-extensions:    
   build-depends:       base >=4.5 && < 5
                ,       mysql
-               ,       mysql-simple
+               ,       mysql-simple >= 0.2.2.5
                ,       typedquery
                ,       template-haskell
                ,       haskell-src-meta

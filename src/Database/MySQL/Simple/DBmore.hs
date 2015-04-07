@@ -21,11 +21,6 @@ qp 23
 qp 24
 qp 25
 
-qr 11
-qr 12
-qr 13
-qr 14
-qr 15
 qr 16
 qr 17
 qr 18
