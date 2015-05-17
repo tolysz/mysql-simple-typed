@@ -25,17 +25,17 @@ import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, t
 
 -- maybe add case 0 + 1 and make it being generated
 
-clap x =
+clap t x =
 #if MIN_VERSION_template_haskell(2,10,0)
-   AppT (ConT ''Param) (VarT x)
+   AppT (ConT t) (VarT x)
 #else
-   ClassP (''Param) [VarT x]
+   ClassP t [VarT x]
 #endif
 
 qp :: Int -> Q [Dec]
 qp k =  do
     ns <- replicateM k (newName "a")
-    let pre = map clap ns
+    let pre = map (clap ''Param) ns
     return [ InstanceD pre (loop k ns) [fun ns] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
@@ -51,7 +51,7 @@ qr k =  do
     fs <- newName "fs"
     vs <- newName "vs"
 
-    let pre = map (\x -> clap (''Result) [VarT x] ) nsa
+    let pre = map (clap ''Result) nsa
     return [ InstanceD pre (loop k nsa) [fun nsa nsf nsv fs vs] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
