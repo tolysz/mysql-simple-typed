@@ -4,6 +4,7 @@
            , NoMonomorphismRestriction
            , BangPatterns
            , TemplateHaskell
+           , CPP
   #-}
 module Database.MySQL.Simple.DBmoreTH
 ( qp
@@ -24,10 +25,17 @@ import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, t
 
 -- maybe add case 0 + 1 and make it being generated
 
+clap =
+#if MIN_VERSION_template_haskell(2,10,0)
+   AppT
+#else
+   ClassP
+#endif
+
 qp :: Int -> Q [Dec]
 qp k =  do
     ns <- replicateM k (newName "a")
-    let pre = map (\x -> ClassP (''Param) [VarT x]) ns
+    let pre = map (\x -> clap (''Param) [VarT x]) ns
     return [ InstanceD pre (loop k ns) [fun ns] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
@@ -43,7 +51,7 @@ qr k =  do
     fs <- newName "fs"
     vs <- newName "vs"
 
-    let pre = map (\x -> ClassP (''Result) [VarT x]) nsa
+    let pre = map (\x -> clap (''Result) [VarT x] ) nsa
     return [ InstanceD pre (loop k nsa) [fun nsa nsf nsv fs vs] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
