@@ -4,7 +4,6 @@
            , NoMonomorphismRestriction
            , BangPatterns
            , TemplateHaskell
-           , LambdaCase
   #-}
 module Database.MySQL.Simple.DBmoreTH
 ( qp
@@ -18,11 +17,8 @@ import Database.MySQL.Simple.Param
 import Database.MySQL.Simple.Result
 import Database.MySQL.Simple.QueryResults
 
-
 import Language.Haskell.TH.Syntax
 import Control.Monad
-
-import Language.Haskell.Meta.Parse()
 
 import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, toInteger)
 

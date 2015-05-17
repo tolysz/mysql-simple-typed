@@ -11,7 +11,7 @@ where
 
 import qualified Database.MySQL.Base         as S (Connection)
 import qualified Database.MySQL.Simple.Types as S (fromQuery)
-import qualified Database.MySQL.Simple       as S (query, query_, execute, execute_, Only(..), In(..), connect, Query)
+import qualified Database.MySQL.Simple       as S (query, query_, execute, execute_, Only(..), In(..), Query)
 import Database.MySQL.Simple.DBmore()
 import qualified Database.TypedQuery.Types as TQ
 import Language.Haskell.TH.Syntax (Q, Exp, Lift(..))
