@@ -25,6 +25,7 @@ import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, t
 
 -- maybe add case 0 + 1 and make it being generated
 
+clap :: Name -> Name -> Type
 clap t x =
 #if MIN_VERSION_template_haskell(2,10,0)
    AppT (ConT t) (VarT x)

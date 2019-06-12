@@ -1,0 +1,10 @@
+resolver: lts-13.25
+
+packages:
+- .
+
+extra-deps:
+- typedquery-0.1.1.2@sha256:7c401b2932f0c4136af0b05b1f3507e2b4d93e84a9cf122d706e3e6b82601b3b
+
+flags: {}
+extra-package-dbs: []
