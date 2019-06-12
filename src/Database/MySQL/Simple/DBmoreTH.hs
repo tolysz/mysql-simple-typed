@@ -21,7 +21,7 @@ import Database.MySQL.Simple.QueryResults
 import Language.Haskell.TH.Syntax
 import Control.Monad
 
-import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, toInteger)
+import Prelude (map, (!!), (<), (-), (.) ,($), head, otherwise, zipWith3, Int, toInteger, Maybe(..))
 
 -- maybe add case 0 + 1 and make it being generated
 
@@ -32,11 +32,19 @@ clap t x =
    ClassP t [VarT x]
 #endif
 
+instD :: Cxt -> Type -> [Dec] -> Dec
+instD =
+#if MIN_VERSION_template_haskell(2,11,0)
+   InstanceD Nothing
+#else
+   InstanceD
+#endif
+
 qp :: Int -> Q [Dec]
 qp k =  do
     ns <- replicateM k (newName "a")
     let pre = map (clap ''Param) ns
-    return [ InstanceD pre (loop k ns) [fun ns] ]
+    return [ instD pre (loop k ns) [fun ns] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
          loop i ns | i < k = AppT (loop (i-1) ns ) (VarT (ns !! i))
@@ -52,7 +60,7 @@ qr k =  do
     vs <- newName "vs"
 
     let pre = map (clap ''Result) nsa
-    return [ InstanceD pre (loop k nsa) [fun nsa nsf nsv fs vs] ]
+    return [ instD pre (loop k nsa) [fun nsa nsf nsv fs vs] ]
        where
          loop 0 ns = AppT (TupleT k) (VarT (head ns))
          loop i ns | i < k = AppT (loop (i-1) ns ) (VarT (ns !! i))
