@@ -4,7 +4,7 @@
 name:                mysql-simple-typed
 version:             0.1.2.0
 synopsis:            Typed extension to mysql simple
--- description:         
+description:         Provide all required bindings for use with the typedquery
 homepage:            https://github.com/tolysz/mysql-simple-typed
 license:             BSD3
 license-file:        LICENSE
